@@ -1,25 +1,44 @@
 :root {
-  /* Neutral Dark Theme - Grayscale Only */
-  --bg-primary: #0f0f0f;
-  --bg-secondary: #1a1a1a;
-  --bg-tertiary: #252525;
-  --bg-card: #1f1f1f;
-  --bg-navbar: rgba(15, 15, 15, 0.8);
+  /* Premium Fintech Color Palette */
+  /* Backgrounds */
+  --bg-primary: #0E1A2B;
+  --bg-secondary: #14233C;
+  --bg-tertiary: rgba(20, 35, 60, 0.8);
+  --bg-card: #14233C;
+  --bg-navbar: rgba(14, 26, 43, 0.8);
   
-  --text-primary: #ffffff;
-  --text-secondary: #a0a0a0;
-  --text-tertiary: #707070;
+  /* Borders */
+  --border-color: rgba(255, 255, 255, 0.06);
+  --border-hover: rgba(255, 255, 255, 0.12);
   
-  --border-color: #2a2a2a;
-  --border-hover: #3a3a3a;
+  /* Primary Accent Blues */
+  --primary-blue: #2563EB;
+  --hover-blue: #60A5FA;
   
-  --hover-bg: #2a2a2a;
-  --hover-glow: rgba(255, 255, 255, 0.1);
+  /* Accent / Glow */
+  --turquoise-accent: #2EE6D6;
+  --pastel-blue-accent: #7C83FF;
   
+  /* Status */
+  --success-green: #22C55E;
+  
+  /* Typography Colors */
+  --text-primary: #FFFFFF;
+  --text-secondary: rgba(255, 255, 255, 0.72);
+  --text-tertiary: rgba(255, 255, 255, 0.45);
+  
+  /* Hover Effects */
+  --hover-bg: rgba(37, 99, 235, 0.1);
+  --hover-glow: rgba(46, 230, 214, 0.15);
+  
+  /* Shadows */
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
   --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --glow-blue: 0 0 40px rgba(37, 99, 235, 0.3);
+  --glow-turquoise: 0 0 40px rgba(46, 230, 214, 0.3);
   
+  /* Transitions */
   --transition-fast: 200ms;
   --transition-base: 250ms;
   --transition-slow: 300ms;

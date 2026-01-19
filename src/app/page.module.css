@@ -2,13 +2,10 @@
   min-height: 100vh;
   background: var(--bg-primary);
   position: relative;
+  overflow-x: hidden;
 }
 
-/* Main container - CRITICAL: overflow must be visible to prevent clipping mega menus */
 .main {
   position: relative;
-  width: 100%;
-  min-height: calc(100vh - 72px);
-  /* CRITICAL: overflow must be visible to allow fixed-position mega menus to render */
-  overflow: visible;
+  z-index: 1;
 }

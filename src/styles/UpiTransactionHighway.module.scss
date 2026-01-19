@@ -1,0 +1,97 @@
+/* UPI Transaction Highway Animation Styling */
+
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 480px;
+  border-radius: 24px;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(15, 32, 54, 0.4) 0%, rgba(8, 16, 38, 0.3) 100%);
+}
+
+/* Glass background effect */
+.glassBg {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 24px;
+  pointer-events: none;
+  z-index: 1;
+  backdrop-filter: blur(8px);
+}
+
+/* SVG container */
+.svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+/* Token styling (glowing dots) */
+.token {
+  will-change: transform;
+  z-index: 3;
+}
+
+/* Fade overlays at edges */
+.fadeLeft {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 120px;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(8, 16, 38, 0.8) 0%, transparent 100%);
+  z-index: 4;
+  pointer-events: none;
+}
+
+.fadeRight {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 120px;
+  height: 100%;
+  background: linear-gradient(270deg, rgba(8, 16, 38, 0.8) 0%, transparent 100%);
+  z-index: 4;
+  pointer-events: none;
+}
+
+/* Ambient particles - subtle floating elements */
+.ambientParticles {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: rgba(96, 165, 250, 0.4);
+  box-shadow: 0 0 6px rgba(96, 165, 250, 0.6);
+  will-change: transform;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .container {
+    min-height: 380px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    min-height: 320px;
+  }
+
+  .particle {
+    width: 2px;
+    height: 2px;
+  }
+}

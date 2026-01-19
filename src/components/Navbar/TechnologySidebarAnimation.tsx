@@ -108,77 +108,62 @@ function ConnectionLine({
 }) {
   const lineRef = useRef<THREE.Line>(null);
   const materialRef = useRef<THREE.LineBasicMaterial>(null);
-  const geometryRef = useRef<THREE.BufferGeometry | null>(null);
   
-  // Initialize geometry once
-  useEffect(() => {
-    if (!geometryRef.current) {
-      const geom = new THREE.BufferGeometry();
-      const positions = new Float32Array(6); // 2 points * 3 coordinates
-      positions[0] = 0;
-      positions[1] = 0;
-      positions[2] = 0;
-      positions[3] = 0;
-      positions[4] = 0;
-      positions[5] = 0;
-      geom.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-      geometryRef.current = geom;
-    }
-    
-    return () => {
-      if (geometryRef.current) {
-        geometryRef.current.dispose();
-        geometryRef.current = null;
-      }
-    };
+  // Create geometry using useMemo to ensure it's ready
+  const geometry = useMemo(() => {
+    const geom = new THREE.BufferGeometry();
+    // Create initial points
+    const points = [
+      new THREE.Vector3(0, 0, 0),
+      new THREE.Vector3(0, 0, 0),
+    ];
+    geom.setFromPoints(points);
+    return geom;
   }, []);
 
-  useFrame((state) => {
-    if (!geometryRef.current || !materialRef.current || !lineRef.current) return;
-    
-    const time = state.clock.elapsedTime * rotationSpeed;
-    const startX = Math.cos(startAngle + time) * ORBIT_RADIUS;
-    const startY = Math.sin(startAngle + time) * ORBIT_RADIUS;
-    
-    // Update positions safely
-    const positionAttr = geometryRef.current.attributes.position;
-    if (positionAttr && positionAttr.array) {
-      try {
-        const array = positionAttr.array as Float32Array;
-        if (array && array.length >= 6) {
-          array[0] = startX;
-          array[1] = startY;
-          array[2] = 0;
-          array[3] = 0;
-          array[4] = 0;
-          array[5] = 0;
-          positionAttr.needsUpdate = true;
-        }
-      } catch (e) {
-        // Silently handle errors
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (geometry) {
+        geometry.dispose();
       }
-    }
+    };
+  }, [geometry]);
 
-    // Pulse opacity
+  useFrame((state) => {
+    if (!lineRef.current || !materialRef.current || !geometry) return;
+    
     try {
-      const pulse = Math.sin(state.clock.elapsedTime * 3.5 + startAngle) * 0.25 + 0.75;
-      materialRef.current.opacity = isHovered ? pulse * 0.35 : pulse * 0.2;
+      const time = state.clock.elapsedTime * rotationSpeed;
+      const startX = Math.cos(startAngle + time) * ORBIT_RADIUS;
+      const startY = Math.sin(startAngle + time) * ORBIT_RADIUS;
+      
+      // Update geometry using setFromPoints (safer than direct array manipulation)
+      if (geometry && typeof geometry.setFromPoints === 'function') {
+        const points = [
+          new THREE.Vector3(startX, startY, 0),
+          new THREE.Vector3(0, 0, 0),
+        ];
+        geometry.setFromPoints(points);
+      }
+
+      // Pulse opacity - safely access material property
+      if (materialRef.current && typeof materialRef.current.opacity !== 'undefined') {
+        const pulse = Math.sin(state.clock.elapsedTime * 4 + startAngle) * 0.3 + 0.7;
+        materialRef.current.opacity = isHovered ? pulse * 0.4 : pulse * 0.25;
+      }
     } catch (e) {
-      // Silently handle errors
+      // Handle errors silently
     }
   });
 
-  if (!geometryRef.current) {
-    return null;
-  }
-
   return (
-    <line ref={lineRef} geometry={geometryRef.current}>
+    <line ref={lineRef} geometry={geometry}>
       <lineBasicMaterial
         ref={materialRef}
         color="#60a5fa"
         transparent
-        opacity={0.2}
+        opacity={0.25}
       />
     </line>
   );
@@ -238,7 +223,14 @@ export function TechnologySidebarAnimation() {
           gl={{ antialias: true, alpha: true }}
           dpr={[1, 2]}
           onCreated={(state) => {
-            state.gl.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            try {
+              if (state?.gl && typeof state.gl.setPixelRatio === 'function') {
+                const dpr = typeof window !== 'undefined' ? (window.devicePixelRatio || 1) : 1;
+                state.gl.setPixelRatio(Math.min(dpr, 2));
+              }
+            } catch (e) {
+              // Silently handle errors
+            }
           }}
         >
           <Scene isHovered={isHovered} />

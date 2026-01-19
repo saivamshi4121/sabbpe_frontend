@@ -1,0 +1,257 @@
+/* Premium Full-Screen Hero Section */
+
+:root {
+  --primary-blue: #2563eb;
+  --hover-blue: #60a5fa;
+  --accent-cyan: #22d3ee;
+  --accent-teal: #06b6d4;
+  --text-primary: #ffffff;
+  --text-secondary: #a0aec0;
+  --bg-dark: #0e1a2b;
+}
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  z-index: 0;
+}
+
+/* Content wrapper positioned on top of background */
+.contentWrapper {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+
+  @media (max-width: 768px) {
+    align-items: flex-start;
+    padding-top: 120px;
+  }
+}
+
+.content {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  pointer-events: auto;
+
+  @media (max-width: 1024px) {
+    padding: 0 48px;
+    gap: 28px;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0 24px;
+    gap: 24px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0 20px;
+    gap: 20px;
+  }
+}
+
+/* Trust Badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: rgba(34, 211, 238, 0.08);
+  border: 1px solid rgba(34, 211, 238, 0.2);
+  border-radius: 24px;
+  width: fit-content;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(34, 211, 238, 0.12);
+    border-color: rgba(34, 211, 238, 0.3);
+    box-shadow: 0 8px 16px rgba(34, 211, 238, 0.15);
+  }
+
+  @media (max-width: 768px) {
+    padding: 10px 14px;
+  }
+}
+
+.badgeIcon {
+  font-size: 16px;
+  line-height: 1;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
+}
+
+.badgeText {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  letter-spacing: 0.3px;
+
+  @media (max-width: 768px) {
+    font-size: 13px;
+  }
+}
+
+/* Typewriter Heading Container */
+.headingContainer {
+  min-height: 140px;
+}
+
+.heading {
+  font-size: 72px;
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: -1px;
+  color: var(--text-primary);
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  @media (max-width: 1024px) {
+    font-size: 64px;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 48px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 36px;
+  }
+
+  /* Gradient for "Amplified." word */
+  div:last-child {
+    background: linear-gradient(135deg, #2563eb 0%, #22d3ee 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+/* Subheading */
+.subheading {
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0;
+  max-width: 500px;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 15px;
+  }
+}
+
+/* Button Group */
+.buttonGroup {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 8px;
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+}
+
+.button {
+  position: relative;
+  padding: 16px 36px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+
+  @media (max-width: 768px) {
+    padding: 14px 32px;
+    font-size: 15px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 12px 28px;
+    font-size: 14px;
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+.buttonPrimary {
+  background: linear-gradient(135deg, var(--primary-blue) 0%, #1d4ed8 100%);
+  color: var(--text-primary);
+  box-shadow: 0 12px 32px rgba(37, 99, 235, 0.3);
+
+  &:hover {
+    box-shadow: 0 24px 48px rgba(37, 99, 235, 0.4);
+  }
+
+  &:active {
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
+  }
+}
+
+.buttonSecondary {
+  background: rgba(37, 99, 235, 0.1);
+  border: 1.5px solid rgba(37, 99, 235, 0.3);
+  color: var(--text-primary);
+
+  &:hover {
+    background: rgba(37, 99, 235, 0.15);
+    border-color: rgba(37, 99, 235, 0.5);
+    box-shadow: 0 12px 32px rgba(37, 99, 235, 0.2);
+  }
+
+  &:active {
+    background: rgba(37, 99, 235, 0.2);
+  }
+}
+
+.buttonArrow {
+  transition: transform 0.3s ease;
+
+  .buttonPrimary:hover & {
+    transform: translateX(4px);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .badge,
+  .heading,
+  .subheading,
+  .buttonGroup,
+  .button {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .buttonArrow {
+    transition: none !important;
+  }
+}
+

@@ -1,6 +1,12 @@
 import { Navbar } from "@/components/Navbar/Navbar";
-import { Hero } from "@/components/Hero/Hero";
-import { BackgroundShapes } from "@/components/BackgroundShapes/BackgroundShapes";
+import { HeroSection } from "@/components/Hero/HeroSection";
+import { Metrics } from "@/components/Metrics/Metrics";
+import { ValueProposition } from "@/components/ValueProposition/ValueProposition";
+import { NetworkLogos } from "@/components/NetworkLogos/NetworkLogos";
+import { OEMPartners } from "@/components/OEMPartners/OEMPartners";
+import { Mission } from "@/components/Mission/Mission";
+import { FinalCTA } from "@/components/FinalCTA/FinalCTA";
+import { Footer } from "@/components/Footer/Footer";
 import styles from "./page.module.css";
 
 export default function Home() {
@@ -8,9 +14,15 @@ export default function Home() {
     <div className={styles.page}>
       <Navbar />
       <main className={styles.main}>
-        <BackgroundShapes />
-        <Hero />
+        <HeroSection />
+        <Metrics />
+        <ValueProposition />
+        <NetworkLogos />
+        <OEMPartners />
+        <Mission />
+        <FinalCTA />
       </main>
+      <Footer />
     </div>
   );
 }

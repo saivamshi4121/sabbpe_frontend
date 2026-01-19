@@ -1,0 +1,90 @@
+/* Hero Background - Animated Gradient Blobs & Particles */
+
+.container {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* Deep dark gradient base */
+.gradientBase {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    #0e1a2b 0%,
+    #12213a 25%,
+    #0f2236 50%,
+    #1a2d45 75%,
+    #0e1a2b 100%
+  );
+  z-index: 1;
+}
+
+/* Animated gradient blobs */
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  z-index: 2;
+  will-change: transform;
+}
+
+/* Particles container */
+.particlesContainer {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Individual particle */
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(96, 165, 250, 0.4));
+  box-shadow: 0 0 8px rgba(96, 165, 250, 0.4);
+  will-change: transform;
+}
+
+/* Subtle overlay gradient for depth and vignette */
+.overlayGradient {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 255, 255, 0.02) 0%,
+    transparent 50%,
+    rgba(14, 26, 43, 0.3) 100%
+  );
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .blob {
+    animation: none !important;
+  }
+
+  .particle {
+    animation: none !important;
+  }
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .blob {
+    filter: blur(60px);
+  }
+
+  .particle {
+    width: 3px;
+    height: 3px;
+  }
+}

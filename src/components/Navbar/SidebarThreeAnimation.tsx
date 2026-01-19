@@ -48,8 +48,9 @@ function CenterNode({ isHovered }: { isHovered: boolean }) {
         <sphereGeometry args={[NODE_SIZE, 16, 16]} />
         <meshBasicMaterial
           color="#60a5fa"
-          emissive="#3b82f6"
-          emissiveIntensity={isHovered ? 0.8 : 0.5}
+          toneMapped={false}
+          transparent
+          opacity={isHovered ? 0.8 : 0.6}
         />
       </mesh>
     </group>
@@ -132,27 +133,31 @@ function ConnectionLine({
   }, [geometry]);
 
   useFrame((state) => {
-    if (!lineRef.current || !materialRef.current) return;
-    
-    const time = state.clock.elapsedTime * rotationSpeed;
-    const startX = Math.cos(startAngle + time) * ORBIT_RADIUS;
-    const startY = Math.sin(startAngle + time) * ORBIT_RADIUS;
-    
-    // Update geometry using setFromPoints (safer than direct array manipulation)
-    const points = [
-      new THREE.Vector3(startX, startY, 0),
-      new THREE.Vector3(0, 0, 0),
-    ];
+    if (!lineRef.current || !materialRef.current || !geometry) return;
     
     try {
-      geometry.setFromPoints(points);
-    } catch (e) {
-      // Handle errors silently
-    }
+      const time = state.clock.elapsedTime * rotationSpeed;
+      const startX = Math.cos(startAngle + time) * ORBIT_RADIUS;
+      const startY = Math.sin(startAngle + time) * ORBIT_RADIUS;
+      
+      // Update geometry using setFromPoints (safer than direct array manipulation)
+      const points = [
+        new THREE.Vector3(startX, startY, 0),
+        new THREE.Vector3(0, 0, 0),
+      ];
+      
+      if (geometry && typeof geometry.setFromPoints === 'function') {
+        geometry.setFromPoints(points);
+      }
 
-    // Pulse opacity
-    const pulse = Math.sin(state.clock.elapsedTime * 4 + startAngle) * 0.3 + 0.7;
-    materialRef.current.opacity = isHovered ? pulse * 0.4 : pulse * 0.25;
+      // Pulse opacity - safely access material property
+      if (materialRef.current && typeof materialRef.current.opacity !== 'undefined') {
+        const pulse = Math.sin(state.clock.elapsedTime * 4 + startAngle) * 0.3 + 0.7;
+        materialRef.current.opacity = isHovered ? pulse * 0.4 : pulse * 0.25;
+      }
+    } catch (e) {
+      // Silently handle any errors
+    }
   });
 
   return (
@@ -225,8 +230,14 @@ export function SidebarThreeAnimation() {
           gl={{ antialias: true, alpha: true }}
           dpr={[1, 2]}
           onCreated={(state) => {
-            // Ensure gl context is ready
-            state.gl.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            try {
+              if (state?.gl && typeof state.gl.setPixelRatio === 'function') {
+                const dpr = typeof window !== 'undefined' ? (window.devicePixelRatio || 1) : 1;
+                state.gl.setPixelRatio(Math.min(dpr, 2));
+              }
+            } catch (e) {
+              // Silently handle errors
+            }
           }}
         >
           <Scene isHovered={isHovered} />

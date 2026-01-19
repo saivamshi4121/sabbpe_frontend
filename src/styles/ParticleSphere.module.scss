@@ -1,0 +1,81 @@
+/* Styling for the Three.js canvas wrapper and glow */
+
+.canvasWrap {
+  width: 100%;
+  max-width: 820px;
+  height: 560px;
+  position: relative;
+  border-radius: 20px;
+  overflow: visible;
+}
+
+.glow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 720px;
+  height: 720px;
+  filter: blur(72px);
+  background: radial-gradient(circle at center, rgba(46,154,255,0.12), rgba(58,88,150,0.02));
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Cursor spotlight overlay - follows mouse for premium effect */
+.spotlight {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  pointer-events: none;
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: radial-gradient(
+    circle at var(--mx, 50%) var(--my, 50%),
+    rgba(96, 165, 250, 0.18) 0%,
+    rgba(96, 165, 250, 0.08) 25%,
+    transparent 55%
+  );
+}
+
+.canvasWrap:hover .spotlight {
+  opacity: 1;
+}
+
+/* make canvas occupy wrapper */
+.canvasWrap canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+@media (max-width: 1024px) {
+  .canvasWrap {
+    height: 480px;
+    max-width: 560px;
+  }
+
+  .glow {
+    width: 520px;
+    height: 520px;
+    filter: blur(60px);
+  }
+}
+
+@media (max-width: 768px) {
+  .canvasWrap {
+    height: 420px;
+    max-width: 100%;
+  }
+
+  .glow {
+    width: 420px;
+    height: 420px;
+    filter: blur(48px);
+  }
+
+  .spotlight {
+    display: none; /* Disable spotlight on mobile */
+  }
+}

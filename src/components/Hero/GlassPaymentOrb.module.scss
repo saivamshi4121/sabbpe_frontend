@@ -1,0 +1,311 @@
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin glass-effect {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+:root {
+  --primary-blue: #2563eb;
+  --turquoise: #2ee6d6;
+  --bg-dark: #0e1a2b;
+  --panel-dark: #14233c;
+  --text-primary: #ffffff;
+  --text-secondary: #a0aec0;
+  --hover-blue: #60a5fa;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  @include flex-center;
+  min-height: 400px;
+
+  @media (max-width: 768px) {
+    min-height: 350px;
+  }
+}
+
+/* Background glow effect */
+.backgroundGlow {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(
+    circle,
+    rgba(37, 99, 235, 0.15) 0%,
+    rgba(46, 230, 214, 0.08) 40%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  filter: blur(40px);
+  pointer-events: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  @media (max-width: 768px) {
+    width: 350px;
+    height: 350px;
+  }
+
+  @media (max-width: 480px) {
+    width: 280px;
+    height: 280px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+/* Main orb glass sphere */
+.orb {
+  position: relative;
+  width: 360px;
+  height: 360px;
+  border-radius: 50%;
+  @include glass-effect;
+  box-shadow: 0 0 60px rgba(37, 99, 235, 0.2),
+    0 0 120px rgba(46, 230, 214, 0.1), inset 0 0 30px rgba(46, 230, 214, 0.05);
+  overflow: hidden;
+  z-index: 10;
+
+  @media (max-width: 1024px) {
+    width: 300px;
+    height: 300px;
+  }
+
+  @media (max-width: 768px) {
+    width: 260px;
+    height: 260px;
+  }
+
+  @media (max-width: 480px) {
+    width: 220px;
+    height: 220px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+
+  &:hover {
+    .orbInnerGlow {
+      opacity: 0.4;
+    }
+
+    .particle {
+      filter: drop-shadow(0 0 6px rgba(46, 230, 214, 0.8));
+    }
+  }
+}
+
+/* Inner glow inside orb */
+.orbInnerGlow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle,
+    rgba(46, 230, 214, 0.1) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0.25;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+/* Overlay gradient on orb */
+.orbOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, transparent 50%, rgba(46, 230, 214, 0.03) 100%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Particles container */
+.particlesContainer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  @include flex-center;
+  z-index: 3;
+}
+
+/* Orbit for particle rotation */
+.particleOrbit {
+  position: absolute;
+  border-radius: 50%;
+  @include flex-center;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+/* Individual particle */
+.particle {
+  width: 6px;
+  height: 6px;
+  background: radial-gradient(circle, rgba(46, 230, 214, 0.8), rgba(37, 99, 235, 0.4));
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(46, 230, 214, 0.6), 0 0 16px rgba(37, 99, 235, 0.3);
+  transition: filter 0.3s ease;
+
+  @media (max-width: 768px) {
+    width: 5px;
+    height: 5px;
+    box-shadow: 0 0 6px rgba(46, 230, 214, 0.5), 0 0 12px rgba(37, 99, 235, 0.25);
+  }
+}
+
+/* Labels container */
+.labelsContainer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  @include flex-center;
+  z-index: 5;
+}
+
+/* Label styling */
+.label {
+  position: absolute;
+  cursor: pointer;
+  z-index: 20;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+.labelContent {
+  @include glass-effect;
+  @include flex-center;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.15);
+
+  .label:hover & {
+    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.25), 0 0 12px rgba(46, 230, 214, 0.2);
+    border: 1px solid rgba(46, 230, 214, 0.3);
+    background: rgba(46, 230, 214, 0.08);
+  }
+
+  @media (max-width: 768px) {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+}
+
+/* Label position variants */
+.label-top-left {
+  top: -30px;
+  left: -60px;
+
+  @media (max-width: 768px) {
+    top: -25px;
+    left: -50px;
+  }
+
+  @media (max-width: 480px) {
+    top: -20px;
+    left: -45px;
+  }
+}
+
+.label-top-right {
+  top: -30px;
+  right: -60px;
+
+  @media (max-width: 768px) {
+    top: -25px;
+    right: -50px;
+  }
+
+  @media (max-width: 480px) {
+    top: -20px;
+    right: -45px;
+  }
+}
+
+.label-right {
+  right: -80px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  @media (max-width: 768px) {
+    right: -60px;
+  }
+
+  @media (max-width: 480px) {
+    right: -50px;
+  }
+}
+
+.label-bottom-right {
+  bottom: -30px;
+  right: -60px;
+
+  @media (max-width: 768px) {
+    bottom: -25px;
+    right: -50px;
+  }
+
+  @media (max-width: 480px) {
+    bottom: -20px;
+    right: -45px;
+  }
+}
+
+.label-bottom-left {
+  bottom: -30px;
+  left: -60px;
+
+  @media (max-width: 768px) {
+    bottom: -25px;
+    left: -50px;
+  }
+
+  @media (max-width: 480px) {
+    bottom: -20px;
+    left: -45px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .orb {
+    transform: none !important;
+  }
+
+  .particleOrbit {
+    animation: none !important;
+  }
+
+  .particle {
+    animation: none !important;
+  }
+
+  .label {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
