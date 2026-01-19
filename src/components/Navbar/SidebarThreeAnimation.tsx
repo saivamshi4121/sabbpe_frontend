@@ -4,7 +4,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { motion } from "framer-motion";
 import * as THREE from "three";
-import styles from "./SidebarThreeAnimation.module.css";
 
 // Number of orbiting nodes
 const NODE_COUNT = 6;
@@ -213,7 +212,7 @@ export function SidebarThreeAnimation() {
   return (
     <motion.div
       ref={containerRef}
-      className={styles.container}
+      className="relative w-full h-full flex items-center justify-center"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       initial={{ opacity: 0, scale: 0.9 }}
@@ -224,7 +223,7 @@ export function SidebarThreeAnimation() {
         ease: [0.16, 1, 0.3, 1],
       }}
     >
-      <div className={styles.canvasWrapper}>
+      <div className="absolute inset-0 w-full h-full">
         <Canvas
           camera={{ position: [0, 0, 2], fov: 50 }}
           gl={{ antialias: true, alpha: true }}
@@ -245,9 +244,9 @@ export function SidebarThreeAnimation() {
       </div>
       
       {/* Optional UI Overlay Text */}
-      <div className={styles.overlay}>
-        <div className={styles.overlayTitle}>SabbPe Network</div>
-        <div className={styles.overlaySubtitle}>Secure payments & data flow</div>
+      <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+        <div className="text-sm font-semibold text-white tracking-wide">SabbPe Network</div>
+        <div className="text-xs text-text-secondary">Secure payments & data flow</div>
       </div>
     </motion.div>
   );

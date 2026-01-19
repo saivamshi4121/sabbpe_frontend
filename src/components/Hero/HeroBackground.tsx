@@ -2,7 +2,6 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
-import styles from "../../styles/HeroBackground.module.scss";
 
 interface MousePos {
   x: number;
@@ -42,15 +41,19 @@ export default function HeroBackground() {
   return (
     <div
       ref={containerRef}
-      className={styles.container}
+      className="fixed inset-0 w-full h-screen z-0 overflow-hidden"
       onMouseMove={handleMouseMove}
     >
       {/* Static deep dark gradient base */}
-      <div className={styles.gradientBase} />
+      <div className="absolute inset-0 z-10"
+        style={{
+          background: "linear-gradient(135deg, #0e1a2b 0%, #12213a 25%, #0f2236 50%, #1a2d45 75%, #0e1a2b 100%)"
+        }}
+      />
 
       {/* Animated Blob 1 - Top Left */}
       <motion.div
-        className={styles.blob}
+        className="absolute blur-[80px] z-20 will-change-transform rounded-full"
         style={{
           left: "10%",
           top: "20%",
@@ -76,7 +79,7 @@ export default function HeroBackground() {
 
       {/* Animated Blob 2 - Bottom Right */}
       <motion.div
-        className={styles.blob}
+        className="absolute blur-[80px] z-20 will-change-transform rounded-full"
         style={{
           right: "5%",
           bottom: "10%",
@@ -103,7 +106,7 @@ export default function HeroBackground() {
 
       {/* Animated Blob 3 - Center Right (accent) */}
       <motion.div
-        className={styles.blob}
+        className="absolute blur-[80px] z-20 will-change-transform rounded-full"
         style={{
           right: "20%",
           top: "30%",
@@ -129,14 +132,17 @@ export default function HeroBackground() {
       />
 
       {/* Floating Particles */}
-      <div className={styles.particlesContainer}>
+      <div className="absolute inset-0 z-20 pointer-events-none">
         {[...Array(12)].map((_, i) => (
           <motion.div
             key={`particle-${i}`}
-            className={styles.particle}
+            className="absolute w-1 h-1 rounded-full"
             style={{
               left: `${10 + (i % 4) * 22}%`,
               top: `${15 + Math.floor(i / 4) * 30}%`,
+              background: "radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(96, 165, 250, 0.4))",
+              boxShadow: "0 0 8px rgba(96, 165, 250, 0.4)",
+              willChange: "transform"
             }}
             animate={
               !prefersReducedMotion
@@ -157,7 +163,11 @@ export default function HeroBackground() {
       </div>
 
       {/* Subtle Overlay Gradient for depth */}
-      <div className={styles.overlayGradient} />
+      <div className="absolute inset-0 z-30 pointer-events-none"
+        style={{
+          background: "radial-gradient(ellipse at center, rgba(255, 255, 255, 0.02) 0%, transparent 50%, rgba(14, 26, 43, 0.3) 100%)"
+        }}
+      />
     </div>
   );
 }

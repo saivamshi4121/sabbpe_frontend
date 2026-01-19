@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import styles from "./FinTechNetwork.module.scss";
 
 const networkNodes = [
   { id: 1, label: "UPI", x: "20%", y: "30%" },
@@ -22,17 +21,18 @@ const floatingDots = Array.from({ length: 40 }).map((_, i) => ({
 
 export function FinTechNetwork() {
   return (
-    <div className={styles.container}>
+    <div className="relative w-full h-full flex items-center justify-center">
       {/* Background floating dots */}
       {floatingDots.map((dot) => (
         <motion.div
           key={`dot-${dot.id}`}
-          className={styles.floatingDot}
+          className="absolute rounded-full bg-turquoise opacity-30 pointer-events-none z-0"
           style={{
             left: `${dot.x}%`,
             top: `${dot.y}%`,
             width: `${dot.size}px`,
             height: `${dot.size}px`,
+            filter: 'drop-shadow(0 0 6px rgba(46, 230, 214, 0.4))',
           }}
           animate={{
             y: [0, -30, 0],

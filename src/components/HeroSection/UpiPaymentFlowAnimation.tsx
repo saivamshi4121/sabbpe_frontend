@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
-import styles from "./UpiPaymentFlowAnimation.module.scss";
 
 interface Node {
   id: number;
@@ -166,17 +165,22 @@ export function UpiPaymentFlowAnimation() {
   const pathData = generateSVGPath();
 
   return (
-    <div className={styles.container} ref={containerRef}>
+    <div className="relative w-full h-full bg-gradient-to-br from-[rgba(15,23,42,0.5)] to-[rgba(20,35,60,0.4)] border border-[rgba(34,211,238,0.2)] rounded-[28px] overflow-hidden flex items-center justify-center max-md:rounded-[20px] max-sm:rounded-[16px]" ref={containerRef}>
       {/* Background effects layer */}
-      <div className={styles.backgroundEffects}>
-        <div className={styles.gridTexture}></div>
-        <div className={styles.radialGlowTL}></div>
-        <div className={styles.radialGlowBR}></div>
-        <div className={styles.particlesContainer}>
+      <div className="absolute inset-0 w-full h-full z-0 overflow-hidden">
+        <div className="absolute inset-0 w-full h-full" style={{
+          backgroundImage: `linear-gradient(0deg, rgba(34, 211, 238, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(34, 211, 238, 0.03) 1px, transparent 1px)`,
+          backgroundSize: '60px 60px',
+          opacity: 0.5,
+          pointerEvents: 'none',
+        }}></div>
+        <div className="absolute -top-[20%] -left-[10%] w-[40%] h-[40%] bg-radial-gradient-[circle,rgba(34,211,238,0.08)_0%,transparent_70%] blur-[40px] pointer-events-none"></div>
+        <div className="absolute -bottom-[15%] -right-[5%] w-[35%] h-[35%] bg-radial-gradient-[circle,rgba(37,99,235,0.06)_0%,transparent_70%] blur-[35px] pointer-events-none"></div>
+        <div className="absolute inset-0 w-full h-full pointer-events-none">
           {[...Array(10)].map((_, i) => (
             <div
               key={`particle-${i}`}
-              className={styles.particle}
+              className="absolute w-0.5 h-0.5 bg-[rgba(34,211,238,0.3)] rounded-full animate-float"
               style={{
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 100}%`,
@@ -190,7 +194,7 @@ export function UpiPaymentFlowAnimation() {
       {/* SVG Canvas */}
       <svg
         ref={svgRef}
-        className={styles.canvas}
+        className="absolute inset-0 w-full h-full z-1 pointer-events-none bg-transparent"
         viewBox={`0 0 ${containerRef.current?.offsetWidth || 800} ${containerRef.current?.offsetHeight || 580}`}
         preserveAspectRatio="none"
         width="100%"
@@ -287,7 +291,7 @@ export function UpiPaymentFlowAnimation() {
       </svg>
 
       {/* Nodes overlay */}
-      <div className={styles.nodesOverlay}>
+      <div className="absolute inset-0 w-full h-full z-3 pointer-events-none p-0">
         {nodes.map((node, idx) => {
           const isActive = closestNodeIndex === idx;
           const isCompleted = activeNodeIndex > idx;
@@ -295,7 +299,7 @@ export function UpiPaymentFlowAnimation() {
           return (
             <motion.div
               key={node.id}
-              className={styles.nodeWrapper}
+              className="absolute -translate-x-1/2 -translate-y-1/2 will-change-transform pointer-events-auto max-md:scale-90 max-sm:scale-80"
               style={{
                 left: `${node.leftPercent}%`,
                 top: `${node.topPercent}%`,
@@ -311,7 +315,7 @@ export function UpiPaymentFlowAnimation() {
               {/* Active pulse halo */}
               {isActive && (
                 <motion.div
-                  className={styles.activePulse}
+                  className="absolute -inset-[18px] rounded-full bg-radial-gradient-[circle,rgba(34,211,238,0.5),transparent_70%] blur-[12px] will-change-transform pointer-events-none"
                   animate={{
                     scale: [1, 1.8, 1],
                     opacity: [0.8, 0.1, 0.8],
@@ -326,27 +330,24 @@ export function UpiPaymentFlowAnimation() {
 
               {/* Card */}
               <motion.div
-                className={`${styles.nodeCard} ${isActive ? styles.active : ""} ${isCompleted ? styles.completed : ""}`}
+                className={`relative w-[180px] py-4 px-4.5 bg-gradient-to-br from-[rgba(34,211,238,0.08)] to-[rgba(37,99,235,0.05)] border-[1.5px] border-[rgba(34,211,238,0.2)] rounded-[14px] backdrop-blur-[20px] transition-all duration-300 ${
+                  isActive ? "shadow-[0_0_28px_rgba(34,211,238,0.6),inset_0_0_12px_rgba(34,211,238,0.2)]" : isCompleted ? "shadow-[0_0_12px_rgba(34,211,238,0.3)]" : "shadow-[0_0_8px_rgba(96,165,250,0.15)]"
+                }`}
                 animate={{
                   scale: isActive ? 1.02 : 1,
-                  boxShadow: isActive
-                    ? "0 0 28px rgba(34, 211, 238, 0.6), inset 0 0 12px rgba(34, 211, 238, 0.2)"
-                    : isCompleted
-                      ? "0 0 12px rgba(34, 211, 238, 0.3)"
-                      : "0 0 8px rgba(96, 165, 250, 0.15)",
                 }}
                 transition={{
                   duration: 0.35,
                   ease: "easeOut",
                 }}
               >
-                <h3 className={styles.nodeTitle}>{node.title}</h3>
-                <p className={styles.nodeSubtitle}>{node.subtitle}</p>
+                <h3 className="text-sm font-bold text-white m-0 leading-none">{node.title}</h3>
+                <p className="text-xs text-text-secondary m-0 mt-1 leading-tight">{node.subtitle}</p>
 
                 {/* Checkmark */}
                 {isCompleted && (
                   <motion.div
-                    className={styles.checkmark}
+                    className="absolute top-1 right-1 text-xs font-bold text-turquoise"
                     initial={{ scale: 0, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{

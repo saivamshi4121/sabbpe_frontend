@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import styles from "./HeroVisual.module.css";
 
 const paymentNodes = [
   { label: "UPI", delay: 0 },
@@ -11,18 +10,18 @@ const paymentNodes = [
 
 export function HeroVisual() {
   return (
-    <div className={styles.container}>
+    <div className="relative w-full h-full flex items-center justify-center">
       {/* Central node */}
-      <div className={styles.centerNode}>
-        <div className={styles.centerGlow} />
-        <div className={styles.centerDot} />
+      <div className="absolute w-[120px] h-[120px] flex items-center justify-center z-[2] max-md:w-[80px] max-md:h-[80px]">
+        <div className="absolute w-full h-full rounded-full bg-gradient-radial from-[rgba(37,99,235,0.4)] to-transparent animate-pulse" />
+        <div className="relative w-4 h-4 rounded-full bg-gradient-to-br from-primary-blue to-turquoise shadow-[0_0_20px_rgba(37,99,235,0.6)] z-[3] max-md:w-3 max-md:h-3" />
       </div>
 
       {/* Floating payment cards */}
       {(paymentNodes ?? []).map((node, index) => (
         <motion.div
           key={node.label}
-          className={styles.node}
+          className="absolute w-[140px] h-20 animate-float max-md:w-[100px] max-md:h-[60px]"
           initial={{ opacity: 0, scale: 0 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, delay: 0.5 + node.delay }}
@@ -30,15 +29,15 @@ export function HeroVisual() {
             animationDelay: `${index * 0.2}s`,
           }}
         >
-          <div className={styles.nodeGlow} />
-          <div className={styles.nodeCard}>
-            <span className={styles.nodeLabel}>{node.label}</span>
+          <div className="absolute w-full h-full rounded-2xl bg-[rgba(37,99,235,0.1)] backdrop-blur-glass border border-[rgba(96,165,250,0.2)] animate-glow" />
+          <div className="relative w-full h-full flex items-center justify-center rounded-2xl bg-[rgba(20,35,60,0.6)] backdrop-blur-glass border border-[rgba(255,255,255,0.08)] z-[1] transition-all duration-300 hover:translate-y-[-4px] hover:border-[rgba(96,165,250,0.4)] hover:shadow-[0_8px_24px_rgba(37,99,235,0.2)]">
+            <span className="text-sm font-semibold text-white tracking-wider max-md:text-xs">{node.label}</span>
           </div>
         </motion.div>
       ))}
 
       {/* Connecting lines */}
-      <svg className={styles.lines} viewBox="0 0 400 400">
+      <svg className="absolute w-full h-full top-0 left-0 pointer-events-none z-[1]" viewBox="0 0 400 400">
         {(paymentNodes ?? []).map((_, index) => {
           const angle = (index / paymentNodes.length) * Math.PI * 2;
           const x1 = 200;
@@ -73,7 +72,7 @@ export function HeroVisual() {
       {Array.from({ length: 8 }).map((_, i) => (
         <motion.div
           key={i}
-          className={styles.floatingDot}
+          className="absolute w-1 h-1 rounded-full bg-turquoise opacity-30 pointer-events-none z-0"
           style={{
             left: `${10 + i * 12}%`,
             top: `${20 + (i % 3) * 25}%`,

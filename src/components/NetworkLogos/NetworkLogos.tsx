@@ -10,10 +10,7 @@ const logos = [
   "Worldline",
   "Mswipe",
   "Vi",
-  "Innoviti",
-  "Valuedesign",
-  "Unlimit",
-  "FidyPay",
+  "Innovi",
 ];
 
 export function NetworkLogos() {

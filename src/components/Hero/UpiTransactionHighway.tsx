@@ -2,7 +2,6 @@
 
 import React, { useMemo } from "react";
 import { motion } from "framer-motion";
-import styles from "../../styles/UpiTransactionHighway.module.scss";
 
 interface Token {
   id: number;
@@ -70,13 +69,23 @@ export default function UpiTransactionHighway() {
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   return (
-    <div className={styles.container}>
-      <div className={styles.glassBg} />
+    <div className="relative w-full h-full min-h-[480px] max-lg:min-h-[380px] max-md:min-h-[320px] rounded-[24px] overflow-hidden"
+      style={{
+        background: "linear-gradient(135deg, rgba(15, 32, 54, 0.4) 0%, rgba(8, 16, 38, 0.3) 100%)"
+      }}
+    >
+      {/* Glass background effect */}
+      <div className="absolute inset-0 rounded-[24px] pointer-events-none z-10 border border-[rgba(255,255,255,0.06)]"
+        style={{
+          background: "rgba(255, 255, 255, 0.02)",
+          backdropFilter: "blur(8px)"
+        }}
+      />
 
       <svg
         viewBox="0 0 800 280"
         preserveAspectRatio="none"
-        className={styles.svg}
+        className="absolute inset-0 w-full h-full z-20"
         width="100%"
         height="100%"
       >
@@ -176,15 +185,23 @@ export default function UpiTransactionHighway() {
       ))}
 
       {/* Fade overlays at edges for premium look */}
-      <div className={styles.fadeLeft} />
-      <div className={styles.fadeRight} />
+      <div className="absolute left-0 top-0 w-[120px] h-full z-30 pointer-events-none"
+        style={{
+          background: "linear-gradient(90deg, rgba(8, 16, 38, 0.8) 0%, transparent 100%)"
+        }}
+      />
+      <div className="absolute right-0 top-0 w-[120px] h-full z-30 pointer-events-none"
+        style={{
+          background: "linear-gradient(270deg, rgba(8, 16, 38, 0.8) 0%, transparent 100%)"
+        }}
+      />
 
       {/* Subtle floating particles (optional ambient detail) */}
-      <div className={styles.ambientParticles}>
+      <div className="absolute inset-0 z-10 pointer-events-none">
         {[...Array(8)].map((_, i) => (
           <motion.div
             key={`particle-${i}`}
-            className={styles.particle}
+            className="absolute w-1.5 h-1.5 rounded-full will-change-transform"
             animate={
               !prefersReducedMotion
                 ? {
@@ -202,6 +219,8 @@ export default function UpiTransactionHighway() {
             style={{
               left: `${10 + i * 10}%`,
               top: `${20 + Math.random() * 40}%`,
+              background: "rgba(96, 165, 250, 0.4)",
+              boxShadow: "0 0 6px rgba(96, 165, 250, 0.6)"
             }}
           />
         ))}

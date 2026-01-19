@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import styles from "./Metrics.module.css";
 
 const metrics = [
   {
@@ -90,19 +89,19 @@ export function Metrics() {
 
   return (
     <motion.section
-      className={styles.metrics}
+      className="py-20 lg:py-20 bg-primary relative max-md:py-16"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true, margin: "-100px" }}
       onViewportEnter={() => handleInView(true)}
       transition={{ duration: 0.5 }}
     >
-      <div className={styles.container}>
+      <div className="max-w-6xl mx-auto px-20 grid grid-cols-4 gap-6 perspective max-lg:grid-cols-2 max-lg:px-10 max-md:grid-cols-1 max-md:px-6 max-md:gap-4">
         {(metrics ?? []).map((metric, index) => (
           <motion.div
             key={index}
-            className={styles.card}
-            initial={{ opacity: 0, y: 20, rotateX: 90 }}
+            className="bg-[rgba(20,35,60,0.6)] backdrop-blur-glass border border-[rgba(255,255,255,0.06)] rounded-3xl px-6 py-8 text-center transition-all duration-300 cursor-default transform-gpu max-md:px-5 max-md:py-6 hover:border-[rgba(96,165,250,0.3)] hover:bg-[rgba(20,35,60,0.8)] hover:shadow-[0_8px_24px_rgba(37,99,235,0.15)]"
+            initial={{ opacity: 0, y: 5, rotateX: 90 }}
             whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{
@@ -122,13 +121,14 @@ export function Metrics() {
             }}
           >
             <motion.div
-              className={styles.number}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
+              className="text-5xl font-bold text-white leading-tight mb-2 max-md:text-4xl bg-gradient-to-r from-[#60A5FA] to-[#2ee6d6] bg-clip-text text-transparent"
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{
-                duration: 0.5,
+                duration: 0.6,
                 delay: metric.delay + 0.2,
+                ease: "easeOut",
               }}
             >
               {hasAnimated && isInView ? (
@@ -144,7 +144,7 @@ export function Metrics() {
                 </>
               )}
             </motion.div>
-            <div className={styles.label}>{metric.label}</div>
+            <div className="text-sm font-medium text-text-secondary leading-relaxed max-md:text-xs">{metric.label}</div>
           </motion.div>
         ))}
       </div>

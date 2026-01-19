@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import styles from "./TechnologyMegaMenu.module.scss";
 
 /**
  * Data types for the Technology Mega Menu
@@ -98,11 +97,11 @@ interface MenuItemComponentProps {
 function MenuItemComponent({ item }: MenuItemComponentProps) {
   return (
     <motion.li
-      className={styles.item}
+      className="relative px-3 py-2.5 text-white no-underline rounded-md text-sm font-normal leading-[1.4] transition-all duration-200 flex items-center gap-2 cursor-pointer hover:bg-[rgba(37,99,235,0.15)] hover:text-turquoise hover:pl-4"
       whileHover={{ x: 4 }}
       transition={{ duration: 0.15 }}
     >
-      <a href="#">
+      <a href="#" className="text-inherit no-underline flex items-center gap-2 w-full">
         <span>{item.name}</span>
       </a>
     </motion.li>
@@ -125,7 +124,9 @@ function CategoryButtonComponent({
 }: CategoryButtonComponentProps) {
   return (
     <motion.button
-      className={`${styles.categoryButton} ${isActive ? styles.active : ""}`}
+      className={`relative px-4 py-3 bg-transparent text-text-secondary border-none rounded-lg text-sm font-medium text-left cursor-pointer transition-all duration-200 overflow-hidden hover:text-white hover:bg-[rgba(37,99,235,0.1)] ${
+        isActive ? "text-primary-blue bg-[rgba(37,99,235,0.15)]" : ""
+      }`}
       onClick={() => onHover(category.id)}
       onMouseEnter={() => onHover(category.id)}
       whileHover={{ x: 4 }}
@@ -133,7 +134,7 @@ function CategoryButtonComponent({
     >
       {isActive && (
         <motion.div
-          className={styles.activeIndicator}
+          className="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-primary-blue to-turquoise rounded-r"
           layoutId="techActiveBar"
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
         />
@@ -157,9 +158,9 @@ export function TechnologyMegaMenu() {
   const content = megaMenuContent[activeCategory] || megaMenuContent.capabilities;
 
   return (
-    <div className={styles.container}>
+    <div className="grid grid-cols-[200px_1fr] gap-8 max-lg:grid-cols-[160px_1fr] max-lg:gap-6 max-md:grid-cols-1 max-md:gap-4">
       {/* Left Sidebar - Categories */}
-      <div className={styles.sidebar}>
+      <div className="flex flex-col gap-1 max-md:flex-row max-md:gap-2 max-md:overflow-x-auto max-md:pb-2">
         {categories.map((category) => (
           <CategoryButtonComponent
             key={category.id}
@@ -170,26 +171,28 @@ export function TechnologyMegaMenu() {
         ))}
 
         {/* Animation Placeholder */}
-        <div className={styles.animationPlaceholder}>
+        <div className="h-[140px] bg-gradient-to-br from-[rgba(37,99,235,0.1)] to-[rgba(46,230,214,0.05)] border border-[rgba(96,165,250,0.15)] rounded-lg flex items-center justify-center text-text-secondary text-xs mt-4 max-md:hidden">
           <div>SabbPe Tech Graph</div>
         </div>
       </div>
 
       {/* Right Content Area - 3 Columns */}
-      <div className={styles.content}>
+      <div className="flex flex-col gap-6 max-lg:gap-4 max-md:gap-3">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeCategory}
-            initial={{ opacity: 0, x: 16 }}
+            initial={{ opacity: 0, x: 4 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -16 }}
+            exit={{ opacity: 0, x: -4 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
-            className={styles.columnGrid}
+            className="grid grid-cols-3 gap-6 overflow-hidden max-lg:grid-cols-2 max-lg:gap-4 max-md:grid-cols-1 max-md:gap-3"
           >
             {content.map((column, idx) => (
-              <div key={idx} className={styles.column}>
-                <h4 className={styles.columnTitle}>{column.title}</h4>
-                <ul className={styles.itemsList}>
+              <div key={idx} className="flex flex-col gap-3">
+                <h4 className="text-xs font-semibold text-text-secondary uppercase tracking-wider pb-2 border-b border-[rgba(255,255,255,0.05)]">
+                  {column.title}
+                </h4>
+                <ul className="flex flex-col gap-2 list-none m-0 p-0">
                   {column.items.map((item, itemIdx) => (
                     <MenuItemComponent key={itemIdx} item={item} />
                   ))}

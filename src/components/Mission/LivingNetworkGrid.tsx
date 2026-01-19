@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import { motion } from "framer-motion";
-import styles from "../../styles/LivingNetworkGrid.module.scss";
 
 interface Dot {
   id: number;
@@ -125,20 +124,30 @@ export default function LivingNetworkGrid() {
   return (
     <div
       ref={containerRef}
-      className={styles.container}
+      className="relative w-full h-full min-h-[400px] rounded-[24px] overflow-hidden transition-all duration-300"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Glass background */}
-      <div className={styles.glassBg} />
+      <div className="absolute inset-0 rounded-[24px] z-10 border border-[rgba(255,255,255,0.08)]"
+        style={{
+          background: "rgba(255, 255, 255, 0.03)",
+          backdropFilter: "blur(18px)"
+        }}
+      />
 
       {/* SVG layer for connection lines */}
       {!prefersReducedMotion && (
         <svg
-          className={styles.linesLayer}
+          className="absolute inset-0 z-20 w-full h-full pointer-events-none"
           width={gridWidth}
           height={gridHeight}
           viewBox={`0 0 ${gridWidth} ${gridHeight}`}
+          style={{
+            left: "50%",
+            top: "50%",
+            transform: "translate(-50%, -50%)"
+          }}
         >
           {lines.map((line) => (
             <motion.line
@@ -159,20 +168,24 @@ export default function LivingNetworkGrid() {
       )}
 
       {/* Dots grid */}
-      <div className={styles.dotsGrid}>
+      <div className="absolute inset-0 z-30 flex items-center justify-center w-full h-full">
         {dots.map((dot) => (
           <motion.div
             key={dot.id}
-            className={styles.dotWrapper}
+            className="absolute w-2 h-2"
             style={{
               left: dot.x,
               top: dot.y,
+              transform: "translate(-50%, -50%)"
             }}
           >
             {/* Active glow ring */}
             {activeDotId === dot.id && !prefersReducedMotion && (
               <motion.div
-                className={styles.glowRing}
+                className="absolute inset-[-6px] rounded-full pointer-events-none will-change-transform"
+                style={{
+                  border: "1px solid rgba(34, 211, 238, 0.4)"
+                }}
                 initial={{ scale: 0.8, opacity: 0.8 }}
                 animate={{ scale: 1.5, opacity: 0 }}
                 transition={{ duration: 0.8, repeat: Infinity }}
@@ -181,9 +194,7 @@ export default function LivingNetworkGrid() {
 
             {/* Main dot */}
             <motion.div
-              className={`${styles.dot} ${
-                activeDotId === dot.id ? styles.active : ""
-              }`}
+              className="absolute inset-0 rounded-full will-change-opacity will-change-transform"
               animate={
                 !prefersReducedMotion
                   ? {
@@ -199,6 +210,7 @@ export default function LivingNetworkGrid() {
                 ease: "easeInOut",
               }}
               style={{
+                background: "radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(96, 165, 250, 0.6))",
                 boxShadow: activeDotId === dot.id
                   ? "0 0 12px rgba(34, 211, 238, 0.6), inset 0 0 6px rgba(96, 165, 250, 0.4)"
                   : "0 0 6px rgba(96, 165, 250, 0.3)",
@@ -209,7 +221,11 @@ export default function LivingNetworkGrid() {
       </div>
 
       {/* Overlay gradient for premium feel */}
-      <div className={styles.overlayGradient} />
+      <div className="absolute inset-0 z-40 pointer-events-none"
+        style={{
+          background: "radial-gradient(ellipse at center, transparent 20%, rgba(14, 26, 43, 0.1) 100%)"
+        }}
+      />
     </div>
   );
 }

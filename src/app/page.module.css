@@ -1,11 +1,1 @@
-.page {
-  min-height: 100vh;
-  background: var(--bg-primary);
-  position: relative;
-  overflow-x: hidden;
-}
-
-.main {
-  position: relative;
-  z-index: 1;
-}
+/* Page styles are now handled by Tailwind CSS */

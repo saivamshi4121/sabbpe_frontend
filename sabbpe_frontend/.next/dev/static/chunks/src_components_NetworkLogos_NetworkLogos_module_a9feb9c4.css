@@ -1,0 +1,129 @@
+/* [project]/src/components/NetworkLogos/NetworkLogos.module.css [app-client] (css) */
+.NetworkLogos-module__fIfvXW__section {
+  background: var(--bg-primary);
+  padding: 120px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.NetworkLogos-module__fIfvXW__container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 80px;
+}
+
+.NetworkLogos-module__fIfvXW__header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.NetworkLogos-module__fIfvXW__title {
+  color: var(--text-primary);
+  letter-spacing: -.5px;
+  margin: 0 0 16px;
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.NetworkLogos-module__fIfvXW__subtitle {
+  color: var(--text-secondary);
+  max-width: 700px;
+  margin: 0 auto;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.NetworkLogos-module__fIfvXW__marqueeWrapper {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, #0000, #000 10% 90%, #0000);
+  mask-image: linear-gradient(to right, #0000, #000 10% 90%, #0000);
+}
+
+.NetworkLogos-module__fIfvXW__marquee {
+  gap: 32px;
+  width: fit-content;
+  animation: 40s linear infinite NetworkLogos-module__fIfvXW__scroll;
+  display: flex;
+}
+
+.NetworkLogos-module__fIfvXW__logoItem {
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-color);
+  transition: all var(--transition-base) ease;
+  opacity: .5;
+  background: #14233c99;
+  border-radius: 16px;
+  flex-shrink: 0;
+  padding: 20px 32px;
+}
+
+.NetworkLogos-module__fIfvXW__logoItem:hover {
+  opacity: 1;
+  background: #14233ccc;
+  border-color: #60a5fa4d;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px #2563eb1a;
+}
+
+.NetworkLogos-module__fIfvXW__logoText {
+  color: var(--text-primary);
+  white-space: nowrap;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+@keyframes NetworkLogos-module__fIfvXW__scroll {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 1280px) {
+  .NetworkLogos-module__fIfvXW__container {
+    padding: 0 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .NetworkLogos-module__fIfvXW__section {
+    padding: 80px 0;
+  }
+
+  .NetworkLogos-module__fIfvXW__container {
+    padding: 0 24px;
+  }
+
+  .NetworkLogos-module__fIfvXW__header {
+    margin-bottom: 40px;
+  }
+
+  .NetworkLogos-module__fIfvXW__title {
+    font-size: 32px;
+  }
+
+  .NetworkLogos-module__fIfvXW__subtitle {
+    font-size: 16px;
+  }
+
+  .NetworkLogos-module__fIfvXW__marquee {
+    gap: 20px;
+  }
+
+  .NetworkLogos-module__fIfvXW__logoItem {
+    padding: 16px 24px;
+  }
+
+  .NetworkLogos-module__fIfvXW__logoText {
+    font-size: 14px;
+  }
+}
+
+/*# sourceMappingURL=src_components_NetworkLogos_NetworkLogos_module_a9feb9c4.css.map*/

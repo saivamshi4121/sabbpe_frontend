@@ -4,7 +4,6 @@ import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
 import qrScanAnimation from "../../assests/Scan QR Mobile Phone.json";
-import styles from "./OfflinePaymentsAnimation.module.css";
 
 interface OfflinePaymentsAnimationProps {
   isVisible: boolean;
@@ -27,7 +26,7 @@ export function OfflinePaymentsAnimation({
 
   return (
     <motion.div
-      className={styles.container}
+      className="relative w-full h-full flex items-center justify-center"
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{
@@ -41,7 +40,7 @@ export function OfflinePaymentsAnimation({
         animationData={qrScanAnimation}
         loop={true}
         autoplay={isVisible}
-        className={styles.animation}
+        className="w-full h-full"
       />
     </motion.div>
   );

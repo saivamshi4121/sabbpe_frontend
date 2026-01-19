@@ -4,7 +4,6 @@ import React, { useRef, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Points, PointMaterial, OrbitControls, Preload } from "@react-three/drei";
 import * as THREE from "three";
-import styles from "../../styles/ParticleSphere.module.scss";
 
 interface ParticleSphereProps {
   count?: number;
@@ -93,7 +92,7 @@ function Particles({ count = 1200, isHovered = false, mouse = { x: 0, y: 0 } }: 
 
 export default function ParticleSphere({ isHovered = false, mouse = { x: 0, y: 0 } }: ParticleSphereProps) {
   return (
-    <div className={styles.canvasWrap}>
+    <div className="w-full max-w-[820px] h-[560px] relative rounded-[20px] overflow-visible mx-auto">
       <Canvas
         camera={{ position: [0, 0, 3], fov: 35 }}
         gl={{ antialias: true, alpha: true }}
@@ -125,10 +124,18 @@ export default function ParticleSphere({ isHovered = false, mouse = { x: 0, y: 0
       </Canvas>
 
       {/* Subtle glow overlay behind canvas for vignette */}
-      <div className={styles.glow} />
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[720px] h-[720px] blur-[72px] z-[2] pointer-events-none"
+        style={{
+          background: "radial-gradient(circle at center, rgba(46,154,255,0.12), rgba(58,88,150,0.02))"
+        }}
+      />
 
       {/* Spotlight overlay for premium cursor tracking effect */}
-      <div className={styles.spotlight} />
+      <div className="absolute inset-0 rounded-[20px] pointer-events-none z-[3] opacity-0 transition-opacity duration-300 hover:opacity-100"
+        style={{
+          background: "radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(96, 165, 250, 0.18) 0%, rgba(96, 165, 250, 0.08) 25%, transparent 55%)"
+        }}
+      />
     </div>
   );
 }

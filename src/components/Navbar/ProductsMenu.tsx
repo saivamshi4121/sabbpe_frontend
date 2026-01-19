@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import styles from "./ProductsMenu.module.scss";
 
 const categories = [
   { id: "offline", label: "Offline Payments", icon: "💳" },
@@ -143,23 +142,23 @@ export function ProductsMenu() {
   const [activeCategory, setActiveCategory] = useState("offline");
 
   return (
-    <div className={styles.productsMenu}>
+    <div className="grid grid-cols-[240px_1fr] gap-12 items-start max-lg:grid-cols-[200px_1fr] max-lg:gap-8 max-md:grid-cols-1 max-md:gap-6">
       {/* Sidebar */}
-      <div className={styles.sidebar}>
+      <div className="flex flex-col gap-3 pb-6">
         {categories.map((category) => (
           <motion.button
             key={category.id}
-            className={`${styles.categoryButton} ${activeCategory === category.id ? styles.active : ""}`}
+            className={`relative px-4 py-3.5 bg-transparent text-secondary text-sm font-medium text-left cursor-pointer rounded-xl transition-all duration-200 overflow-hidden flex items-center gap-2.5 hover:text-primary hover:bg-blue hover:bg-opacity-8 ${activeCategory === category.id ? "text-primary bg-blue bg-opacity-12 border border-blue border-opacity-30" : ""}`}
             onClick={() => setActiveCategory(category.id)}
             onMouseEnter={() => setActiveCategory(category.id)}
             whileHover={{ x: 4 }}
             transition={{ duration: 0.2 }}
           >
-            <span className={styles.icon}>{category.icon}</span>
-            <span className={styles.label}>{category.label}</span>
+            <span className="text-xl opacity-70 transition-opacity duration-200">{category.icon}</span>
+            <span className="flex-1 whitespace-nowrap overflow-hidden text-ellipsis">{category.label}</span>
             {activeCategory === category.id && (
               <motion.div
-                className={styles.activeBar}
+                className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-primary-blue to-turquoise"
                 layoutId="activeBar"
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
               />
@@ -168,41 +167,41 @@ export function ProductsMenu() {
         ))}
 
         {/* Animation Placeholder */}
-        <div className={styles.animationBox}>
-          <div className={styles.animationPlaceholder}>
-            <div className={styles.animationContent}>
-              <span className={styles.animationTitle}>Scan & Pay</span>
-              <span className={styles.animationSubtitle}>UPI in seconds</span>
+        <div className="mt-6 pt-6 border-t border-blue border-opacity-10">
+          <div className="h-30 rounded-2xl bg-gradient-to-br from-blue from-opacity-10 to-turquoise to-opacity-5 border border-blue border-opacity-20 flex items-center justify-center">
+            <div className="flex flex-col items-center gap-1.5">
+              <span className="text-sm font-semibold text-primary tracking-widest">Scan & Pay</span>
+              <span className="text-xs text-tertiary">UPI in seconds</span>
             </div>
           </div>
         </div>
       </div>
 
       {/* Content Grid */}
-      <div className={styles.contentArea}>
+      <div className="min-h-full">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeCategory}
-            initial={{ opacity: 0, x: 16 }}
+            initial={{ opacity: 0, x: 4 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -16 }}
+            exit={{ opacity: 0, x: -4 }}
             transition={{ duration: 0.2 }}
-            className={styles.columnGrid}
+            className="grid grid-cols-3 gap-10 max-lg:gap-8 max-md:grid-cols-1 max-md:gap-6"
           >
             {productContent[activeCategory as keyof typeof productContent]?.columns.map((column, idx) => (
-              <div key={idx} className={styles.column}>
-                <h4 className={styles.columnTitle}>{column.title}</h4>
-                <ul className={styles.itemList}>
+              <div key={idx} className="flex flex-col gap-4">
+                <h4 className="text-sm font-semibold text-primary uppercase tracking-widest opacity-80 m-0 p-0">{column.title}</h4>
+                <ul className="list-none m-0 p-0 flex flex-col gap-2">
                   {column.items.map((item, itemIdx) => (
                     <motion.li
                       key={itemIdx}
-                      className={styles.item}
-                      whileHover={{ x: 4, backgroundColor: "rgba(37, 99, 235, 0.05)" }}
+                      className="relative rounded-lg transition-all duration-200"
+                      whileHover={{ x: 1, backgroundColor: "rgba(37, 99, 235, 0.05)" }}
                       transition={{ duration: 0.15 }}
                     >
-                      <a href="#" className={styles.itemLink}>
+                      <a href="#" className="flex items-center justify-between gap-3 px-3 py-2.5 text-secondary no-underline text-sm font-medium transition-colors duration-200 rounded-md hover:text-primary">
                         <span>{item.name}</span>
-                        {item.tag && <span className={styles.tag}>{item.tag}</span>}
+                        {item.tag && <span className="inline-flex items-center px-2 py-1 bg-blue bg-opacity-15 border border-blue border-opacity-20 rounded text-xs font-bold text-blue uppercase whitespace-nowrap flex-shrink-0 tracking-widest">{item.tag}</span>}
                       </a>
                     </motion.li>
                   ))}
